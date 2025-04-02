@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Challenge Leaderboard</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #1a1a1a;
+            margin: 0;
+            padding: 20px;
+            color: #00ff00;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+        }
+        h1, h2 {
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        .leader {
+            font-size: 1.3em;
+            color: #ffdd57;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #00ff00;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+            color: #00ff00;
+        }
+        td {
+            background-color: #262626;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #ffdd57;
+        }
+        .friendly-msg {
+            text-align: center;
+            font-style: italic;
+            margin-top: 15px;
+            color: #ccc;
+        }
+        .blink {
+            animation: blinker 1.5s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🕹️ Engineering Challenge Leaderboard 🕹️</h1>
+
+    <div id="leader" class="leader blink"></div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Group A (16:50)</th>
+                <th>Group B (18:40)</th>
+            </tr>
+        </thead>
+        <tbody id="scoresTable">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="total">Total Score</td>
+                <td id="totalA" class="total"></td>
+                <td id="totalB" class="total"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="friendly-msg">Keep kahooting for the win!</div>
+</div>
+
+<script>
+const scores = [
+    { week: "Week 6", groupA: 4707, groupB: 3382 },
+    { week: "Week 7", groupA: 4240, groupB: 4077 },
+    { week: "Week 8", groupA: 0, groupB: 0 }
+];
+
+function renderScores() {
+    const table = document.getElementById('scoresTable');
+    let totalA = 0, totalB = 0;
+
+    scores.forEach(score => {
+        const row = `<tr>
+            <td>${score.week}</td>
+            <td>${score.groupA}</td>
+            <td>${score.groupB}</td>
+        </tr>`;
+        table.innerHTML += row;
+
+        totalA += score.groupA;
+        totalB += score.groupB;
+    });
+
+    document.getElementById('totalA').innerText = totalA;
+    document.getElementById('totalB').innerText = totalB;
+
+    const leaderMsg = document.getElementById('leader');
+    if (totalA > totalB) {
+        leaderMsg.textContent = "🚀 Group A leads the game! Level up!";
+    } else if (totalB > totalA) {
+        leaderMsg.textContent = "🚀 Group B takes the lead! Game on!";
+    } else {
+        leaderMsg.textContent = "🛠️ It’s a dead heat! Time for the next round!";
+    }
+}
+
+window.onload = renderScores;
+</script>
+
+</body>
+</html>
+
